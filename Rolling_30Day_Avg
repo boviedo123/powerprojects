@@ -1,0 +1,9 @@
+Rolling_30_Average = 
+
+Var MinDate = CALCULATE(Min(TableName[DateColumn]),ALL(TableName))
+Var DaysToAnalyze = If(Max('Calendar'[Date])-30 <= MinDate,MinDate-Max('Calendar'[Date]),-30)
+Var Period = DATESINPERIOD('Calendar'[Date],MAX('Calendar'[Date]),DaysToAnalyze,DAY)
+
+Return
+
+If(Min(Calendar[Date])>TODAY(),BLANK(),CALCULATE(-[GrossRevenue]*(30/DaysToAnalyze),Period))
