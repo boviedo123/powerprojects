@@ -1,0 +1,10 @@
+VAR MaxDate = CALCULATE(Max(TableName[DateColumn]))
+RETURN
+    
+If( 
+      Today() < MIN('Calendar'[Date]),
+      BLANK(),
+      CALCULATE (SUM('TableName'[SumColumn]),                        
+      'Calendar'[Date] <= MAX('Calendar'[Date]))
+  )
+
