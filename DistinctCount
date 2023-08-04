@@ -1,0 +1,5 @@
+Var _DistinctCount = Calculate(DISTINCTCOUNT(TableName[CountColumn]),Filter(TableName,'TableName'[FilterColumn] = "xxx"))
+Return
+
+//this is giving zero if value doesn't exist
+If(ISBLANK(_DistinctCount),0,_DistinctCount)
