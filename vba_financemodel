@@ -1,0 +1,278 @@
+Sub JOA_Scenario2()
+
+Worksheets("SC2_OUT").Range("A3:H100000").ClearContents
+Sheets("SC2_IN").Select
+
+
+Dim y As Single
+y = 0
+
+Dim i As Single
+i = 0
+
+Dim j As Single
+j = 7
+
+Dim k As Integer
+'beginning row output
+k = 3
+
+Dim b As Integer
+b = 0
+
+Dim g As Integer
+g = WorksheetFunction.Count(Range("A7:A507"))
+g = g + 7
+
+Do While j < g
+
+    If Worksheets("SC2_IN").Cells(j, 13).Value = "Yes" Then
+                
+    
+        If Cells(j, 3).Value = "Subconsultant" Then
+        
+            Do While (i + Worksheets("SC2_IN").Cells(j, 10)) < Worksheets("SC2_IN").Cells(j, 11).Value + 1
+                    
+                    
+                If Worksheets("SC2_IN").Cells(j, 10) + i = Worksheets("SC2_IN").Cells(j, 10) Then
+                    y = y + 0
+                ElseIf (Worksheets("SC2_IN").Cells(j, 10) + i - 1) / 12 = Int((Worksheets("SC2_IN").Cells(j, 10) + i - 1) / 12) Then
+                    y = y + 1
+                Else
+                    y = y + 0
+                End If
+            
+                    
+                    'Month
+                    Sheets("SC2_OUT").Select
+                    Worksheets("SC2_OUT").Range(Cells(k + b, 1), Cells(k + b + 11, 1)) = Worksheets("SC2_IN").Cells(j, 10) + i
+                    'Equivalent Date
+                    Worksheets("SC2_OUT").Range(Cells(k + b, 2), Cells(k + b + 11, 2)) = DateAdd("m", Worksheets("SC1_IN").Cells(j, 10) + i - 1, Worksheets("PERM_IN").Cells(2, 2))
+                    'Client
+                    Worksheets("SC2_OUT").Range(Cells(k + b, 3), Cells(k + b + 11, 3)) = Worksheets("SC2_IN").Cells(j, 4)
+                    'Employee Name
+                    Worksheets("SC2_OUT").Range(Cells(k + b, 4), Cells(k + b + 11, 4)) = Worksheets("SC2_IN").Cells(j, 2)
+                    'Scenario
+                    Worksheets("SC2_OUT").Range(Cells(k + b, 5), Cells(k + b + 11, 5)) = "BUSINESS PLAN"
+                    
+                    
+                    '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Type~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                    'GROSS REVENUE
+                    Worksheets("SC2_OUT").Cells(k + b, 6) = Worksheets("PERM_IN").Cells(25, 1)
+                    'PROJECT COSTS
+                    Worksheets("SC2_OUT").Cells(k + b + 1, 6) = Worksheets("PERM_IN").Cells(17, 1)
+                    'ACCOUNTING & HR
+                    Worksheets("SC2_OUT").Cells(k + b + 2, 6) = Worksheets("PERM_IN").Cells(18, 1)
+                    'INSURANCE
+                    Worksheets("SC2_OUT").Cells(k + b + 3, 6) = Worksheets("PERM_IN").Cells(19, 1)
+                    'OPERATIONS
+                    Worksheets("SC2_OUT").Cells(k + b + 4, 6) = Worksheets("PERM_IN").Cells(20, 1)
+                    'BUSINESS DEVELOPMENT & MARKETING
+                    Worksheets("SC2_OUT").Cells(k + b + 5, 6) = Worksheets("PERM_IN").Cells(21, 1)
+                    'MANAGEMENT
+                    Worksheets("SC2_OUT").Cells(k + b + 6, 6) = Worksheets("PERM_IN").Cells(22, 1)
+                    'IT
+                    Worksheets("SC2_OUT").Cells(k + b + 7, 6) = Worksheets("PERM_IN").Cells(23, 1)
+                    'OTHER MISC
+                    Worksheets("SC2_OUT").Cells(k + b + 8, 6) = Worksheets("PERM_IN").Cells(24, 1)
+                    '401K MATCH
+                    Worksheets("SC2_OUT").Cells(k + b + 9, 6) = Worksheets("PERM_IN").Cells(26, 1)
+                    'PAYROLL (UNLOADED)
+                    Worksheets("SC2_OUT").Cells(k + b + 10, 6) = Worksheets("PERM_IN").Cells(27, 1)
+                    'PAYROLL TAX
+                    Worksheets("SC2_OUT").Cells(k + b + 11, 6) = Worksheets("PERM_IN").Cells(28, 1)
+                    
+                    
+                    '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Amount~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                    'GROSS REVENUE
+                    If i + 1 < Cells(j, 14) Then
+                        Worksheets("SC2_OUT").Cells(k + b, 7) = (Worksheets("SC2_IN").Cells(j, 5) * Worksheets("SC2_IN").Cells(j, 7)) * ((i + 1) / Worksheets("SC2_IN").Cells(j, 14)) * (1 + Worksheets("PERM_IN").Cells(3, 2)) ^ y
+                    Else
+                        
+                        Worksheets("SC2_OUT").Cells(k + b, 7) = Worksheets("SC2_IN").Cells(j, 5) * Worksheets("SC2_IN").Cells(j, 7) * (1 + Worksheets("PERM_IN").Cells(3, 2)) ^ y
+                    End If
+                    'PROJECT COSTS
+                    Worksheets("SC2_OUT").Cells(k + b + 1, 7) = -(Worksheets("SC2_OUT").Cells(k + b, 7) * Worksheets("PERM_IN").Cells(17, 3) + Worksheets("SC2_IN").Cells(j, 6) * Worksheets("SC2_IN").Cells(j, 7)) * (1 + Worksheets("PERM_IN").Cells(3, 2)) ^ y
+                    'ACCOUNTING & HR
+                    Worksheets("SC2_OUT").Cells(k + b + 2, 7) = -Worksheets("SC2_OUT").Cells(k + b, 7) * Worksheets("PERM_IN").Cells(18, 3)
+                    'INSURANCE
+                    Worksheets("SC2_OUT").Cells(k + b + 3, 7) = -Worksheets("SC2_OUT").Cells(k + b, 7) * Worksheets("PERM_IN").Cells(19, 3)
+                    'OPERATIONS
+                    Worksheets("SC2_OUT").Cells(k + b + 4, 7) = -Worksheets("SC2_OUT").Cells(k + b, 7) * Worksheets("PERM_IN").Cells(20, 3)
+                    'BUSINESS DEVELOPMENT & MARKETING
+                    Worksheets("SC2_OUT").Cells(k + b + 5, 7) = -Worksheets("SC2_OUT").Cells(k + b, 7) * Worksheets("PERM_IN").Cells(21, 3)
+                    'MANAGEMENT
+                    Worksheets("SC2_OUT").Cells(k + b + 6, 7) = -Worksheets("SC2_OUT").Cells(k + b, 7) * Worksheets("PERM_IN").Cells(22, 3)
+                    'IT
+                    Worksheets("SC2_OUT").Cells(k + b + 7, 7) = -Worksheets("SC2_OUT").Cells(k + b, 7) * Worksheets("PERM_IN").Cells(23, 3)
+                    'OTHER MISC
+                    Worksheets("SC2_OUT").Cells(k + b + 8, 7) = -Worksheets("SC2_OUT").Cells(k + b, 7) * Worksheets("PERM_IN").Cells(24, 3)
+                    '401K MATCH
+                    Worksheets("SC2_OUT").Cells(k + b + 9, 7) = 0
+                    'PAYROLL (UNLOADED)
+                    Worksheets("SC2_OUT").Cells(k + b + 10, 7) = 0
+                    'PAYROLL TAX
+                    Worksheets("SC2_OUT").Cells(k + b + 11, 7) = 0
+                    
+                    
+                    i = i + 1
+                    b = b + 12
+                   
+                Loop
+        
+        Else
+        
+            Do While (i + Worksheets("SC2_IN").Cells(j, 10)) < Worksheets("SC2_IN").Cells(j, 11).Value + 1
+               
+                
+                '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                
+                    'Inflation Calculation
+                 
+                    If Worksheets("SC2_IN").Cells(j, 10) + i = Worksheets("SC2_IN").Cells(j, 10) Then
+                        y = y + 0
+                    ElseIf (Worksheets("SC2_IN").Cells(j, 10) + i - 1) / 12 = Int((Worksheets("SC2_IN").Cells(j, 10) + i - 1) / 12) Then
+                        y = y + 1
+                    Else
+                        y = y + 0
+                    End If
+                
+                
+                If Worksheets("SC2_IN").Cells(j, 15) = "Yes" Then
+                    
+                    'Month
+                    Sheets("SC2_OUT").Select
+                    Worksheets("SC2_OUT").Cells(k + b, 1) = Worksheets("SC2_IN").Cells(j, 10) + i
+                    
+                    'Equivalent Date
+                    Worksheets("SC2_OUT").Cells(k + b, 2) = DateAdd("m", Worksheets("SC2_IN").Cells(j, 10) + i - 1, Worksheets("PERM_IN").Cells(2, 2))
+                    'Client
+                    Worksheets("SC2_OUT").Cells(k + b, 3) = Worksheets("SC2_IN").Cells(j, 4)
+                    'Scenario
+                    Worksheets("SC2_OUT").Cells(k + b, 5) = "BUSINESS PLAN"
+                    'GROSS REVENUE - Type
+                    Worksheets("SC2_OUT").Cells(k + b, 6) = Worksheets("PERM_IN").Cells(25, 1)
+                    'GROSS REVENUE - Amount
+                    If i + 1 < Worksheets("SC2_IN").Cells(j, 14) Then
+                        Worksheets("SC2_OUT").Cells(k + b, 7) = (Worksheets("SC2_IN").Cells(j, 5) * Worksheets("SC2_IN").Cells(j, 7)) * ((i + 1) / Worksheets("SC2_IN").Cells(j, 14)) * (1 + Worksheets("PERM_IN").Cells(3, 2)) ^ y
+                    Else
+                        
+                        Worksheets("SC2_OUT").Cells(k + b, 7) = Worksheets("SC2_IN").Cells(j, 5) * Worksheets("SC2_IN").Cells(j, 7) * (1 + Worksheets("PERM_IN").Cells(3, 2)) ^ y
+                    End If
+                    
+                    
+                
+                Else
+                
+                    'Month
+                    Sheets("SC2_OUT").Select
+                    Worksheets("SC2_OUT").Range(Cells(k + b, 1), Cells(k + b + 11, 1)) = Worksheets("SC2_IN").Cells(j, 10) + i
+                    'Equivalent Date
+                    Worksheets("SC2_OUT").Range(Cells(k + b, 2), Cells(k + b + 11, 2)) = DateAdd("m", Worksheets("SC2_IN").Cells(j, 10) + i - 1, Worksheets("PERM_IN").Cells(2, 2))
+                    'Client
+                    Worksheets("SC2_OUT").Range(Cells(k + b, 3), Cells(k + b + 11, 3)) = Worksheets("SC2_IN").Cells(j, 4)
+                    'Employee Name
+                    Worksheets("SC2_OUT").Range(Cells(k + b, 4), Cells(k + b + 11, 4)) = Worksheets("SC2_IN").Cells(j, 2)
+                    'Scenario
+                    Worksheets("SC2_OUT").Range(Cells(k + b, 5), Cells(k + b + 11, 5)) = "BUSINESS PLAN"
+                    '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Type~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                    'GROSS REVENUE
+                    Worksheets("SC2_OUT").Cells(k + b, 6) = Worksheets("PERM_IN").Cells(25, 1)
+                    'PROJECT COSTS
+                    Worksheets("SC2_OUT").Cells(k + b + 1, 6) = Worksheets("PERM_IN").Cells(17, 1)
+                    'ACCOUNTING & HR
+                    Worksheets("SC2_OUT").Cells(k + b + 2, 6) = Worksheets("PERM_IN").Cells(18, 1)
+                    'INSURANCE
+                    Worksheets("SC2_OUT").Cells(k + b + 3, 6) = Worksheets("PERM_IN").Cells(19, 1)
+                    'OPERATIONS
+                    Worksheets("SC2_OUT").Cells(k + b + 4, 6) = Worksheets("PERM_IN").Cells(20, 1)
+                    'BUSINESS DEVELOPMENT & MARKETING
+                    Worksheets("SC2_OUT").Cells(k + b + 5, 6) = Worksheets("PERM_IN").Cells(21, 1)
+                    'MANAGEMENT
+                    Worksheets("SC2_OUT").Cells(k + b + 6, 6) = Worksheets("PERM_IN").Cells(22, 1)
+                    'IT
+                    Worksheets("SC2_OUT").Cells(k + b + 7, 6) = Worksheets("PERM_IN").Cells(23, 1)
+                    'OTHER MISC
+                    Worksheets("SC2_OUT").Cells(k + b + 8, 6) = Worksheets("PERM_IN").Cells(24, 1)
+                    'PAYROLL (UNLOADED)
+                    Worksheets("SC2_OUT").Cells(k + b + 9, 6) = Worksheets("PERM_IN").Cells(27, 1)
+                    Worksheets("SC2_OUT").Cells(k + b + 9, 8) = Worksheets("PERM_IN").Cells(29, 1)
+                    '401K MATCH
+                    Worksheets("SC2_OUT").Cells(k + b + 10, 6) = Worksheets("PERM_IN").Cells(27, 1)
+                    Worksheets("SC2_OUT").Cells(k + b + 10, 8) = Worksheets("PERM_IN").Cells(26, 1)
+                    'PAYROLL TAX
+                    Worksheets("SC2_OUT").Cells(k + b + 11, 6) = Worksheets("PERM_IN").Cells(27, 1)
+                    Worksheets("SC2_OUT").Cells(k + b + 11, 8) = Worksheets("PERM_IN").Cells(28, 1)
+                    
+                    
+                    '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Amount~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                    'GROSS REVENUE
+                    If i + 1 < Worksheets("SC2_IN").Cells(j, 14) Then
+                        Worksheets("SC2_OUT").Cells(k + b, 7) = (Worksheets("SC2_IN").Cells(j, 5) * Worksheets("SC2_IN").Cells(j, 7)) * ((i + 1) / Worksheets("SC2_IN").Cells(j, 14)) * (1 + Worksheets("PERM_IN").Cells(3, 2)) ^ y
+                    Else
+                        
+                        Worksheets("SC2_OUT").Cells(k + b, 7) = Worksheets("SC2_IN").Cells(j, 5) * Worksheets("SC2_IN").Cells(j, 7) * (1 + Worksheets("PERM_IN").Cells(3, 2)) ^ y
+                    End If
+                    'PROJECT COSTS
+                    Worksheets("SC2_OUT").Cells(k + b + 1, 7) = -Worksheets("SC2_OUT").Cells(k + b, 7) * Worksheets("PERM_IN").Cells(17, 3)
+                    'ACCOUNTING & HR
+                    Worksheets("SC2_OUT").Cells(k + b + 2, 7) = -Worksheets("SC2_OUT").Cells(k + b, 7) * Worksheets("PERM_IN").Cells(18, 3)
+                    'INSURANCE
+                    Worksheets("SC2_OUT").Cells(k + b + 3, 7) = -Worksheets("SC2_OUT").Cells(k + b, 7) * Worksheets("PERM_IN").Cells(19, 3)
+                    'OPERATIONS
+                    Worksheets("SC2_OUT").Cells(k + b + 4, 7) = -Worksheets("SC2_OUT").Cells(k + b, 7) * Worksheets("PERM_IN").Cells(20, 3)
+                    'BUSINESS DEVELOPMENT & MARKETING
+                    Worksheets("SC2_OUT").Cells(k + b + 5, 7) = -Worksheets("SC2_OUT").Cells(k + b, 7) * Worksheets("PERM_IN").Cells(21, 3)
+                    'MANAGEMENT
+                    Worksheets("SC2_OUT").Cells(k + b + 6, 7) = -Worksheets("SC2_OUT").Cells(k + b, 7) * Worksheets("PERM_IN").Cells(22, 3)
+                    'IT
+                    Worksheets("SC2_OUT").Cells(k + b + 7, 7) = -Worksheets("SC2_OUT").Cells(k + b, 7) * Worksheets("PERM_IN").Cells(23, 3)
+                    'OTHER MISC
+                    Worksheets("SC2_OUT").Cells(k + b + 8, 7) = -Worksheets("SC2_OUT").Cells(k + b, 7) * Worksheets("PERM_IN").Cells(24, 3)
+                    
+                    'PAYROLL (UNLOADED)
+                    If Worksheets("SC2_IN").Cells(j, 9).Value = "Yes" And i = 0 Then
+                    Worksheets("SC2_OUT").Cells(k + b + 9, 7) = (-Worksheets("SC2_IN").Cells(j, 6) * Worksheets("SC2_IN").Cells(j, 7) - Worksheets("SC2_IN").Cells(j, 6) * Worksheets("SC2_IN").Cells(j, 8) - Worksheets("PERM_IN").Cells(8, 2)) * (1 + Worksheets("PERM_IN").Cells(3, 2)) ^ y
+                    Else
+                    Worksheets("SC2_OUT").Cells(k + b + 9, 7) = -Worksheets("SC2_IN").Cells(j, 6) * (Worksheets("SC2_IN").Cells(j, 7) + Worksheets("SC2_IN").Cells(j, 8)) * (1 + Worksheets("PERM_IN").Cells(3, 2)) ^ y
+                    End If
+                    
+                    '401K MATCH
+                    If Worksheets("SC2_IN").Cells(j, 9).Value = "Yes" And i > 11 Then
+                        Worksheets("SC2_OUT").Cells(k + b + 10, 7) = Worksheets("SC2_OUT").Cells(k + b + 9, 7) * Worksheets("SC2_IN").Cells(j, 12)
+                    Else
+                        Worksheets("SC2_OUT").Cells(k + b + 10, 7) = Worksheets("SC2_OUT").Cells(k + b + 9, 7) * Worksheets("SC2_IN").Cells(j, 12)
+                    End If
+                    
+
+                    'PAYROLL TAX
+                    Worksheets("SC2_OUT").Cells(k + b + 11, 7) = Worksheets("SC2_OUT").Cells(k + b + 9, 7) * Worksheets("PERM_IN").Cells(5, 2)
+                    
+                    
+                 
+                '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                End If
+               
+              If Worksheets("SC2_IN").Cells(j, 15) = "Yes" Then
+                b = b + 1
+              Else
+                b = b + 12
+              End If
+              
+              i = i + 1
+               
+            Loop
+        
+        End If
+    
+    End If
+    
+y = 0
+i = 0
+j = j + 1
+ 
+Loop
+
+MsgBox "Congratulations. You have successfully calculated BUSINESS PLAN. Please refresh the dataset in Power BI to visualize."
+
+End Sub
